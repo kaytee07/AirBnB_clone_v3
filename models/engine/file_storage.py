@@ -58,6 +58,25 @@ class FileStorage:
         except:
             pass
 
+    def get(self, cls, id):
+        class_name = str(cls).split('.')[-1][:-2]
+        for key, value in self.__objects.items():
+            cls_name, cid = key.split('.')
+            if cls_name == class_name and cid == id:
+                return value
+
+    def count(self, cls=None):
+        if cls is None:
+            return len(self.__objects)
+        else:
+            class_name = str(cls).split('.')[-1][:-2]
+            counts = 0
+            for key, value in self.__objects.items():
+                cls_name, id = key.split('.')
+                if cls_name == class_name:
+                    counts = counts + 1
+            return counts
+
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
         if obj is not None:
