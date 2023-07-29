@@ -2,7 +2,7 @@
 """
 return the status of my api
 """
-from flask import Flask
+from flask import Flask, jsonify
 import sys
 import os
 from models import storage
@@ -19,6 +19,13 @@ app.register_blueprint(app_views)
 def teardown_storage(exception):
     """ close storage """
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Custom handler for 404 errors."""
+    return jsonify({"error": "Not found"}), 404
+
 
 if __name__ == "__main__":
     host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
