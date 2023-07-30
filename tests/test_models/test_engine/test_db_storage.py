@@ -15,16 +15,34 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
+import MySQLdb
 import os
 import pep8
 import unittest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
+DB_HOST = "hbnb_dev_06"
+DB_USER = "hbnb_user"
+DB_PASSWORD = "hbnb_password"
+DB_NAME = ""
+
 
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
+    def setUp(self):
+        """ connect to database """
+        self.connection = MySQLdb.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, db=DB_NAME)
+        self.cursor = self.connection.cursor()
+
+    def tearDown(self):
+        """close the database after each test"""
+        self.cursor.close()
+        self.connection.close()
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -86,3 +104,10 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get(self):
+        """ Test the get method that retrieves one object """
+
+    def test_count(self):
+        """ Test the count method that count object in db or 
+        count object that have the same class as passed """

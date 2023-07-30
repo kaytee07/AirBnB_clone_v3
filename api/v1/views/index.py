@@ -1,4 +1,4 @@
-#!/usr/bin/app
+#!/usr/bin/python3
 """
 /status route
 """
@@ -15,6 +15,7 @@ from flask import jsonify
 from . import app_views
 parent_directory = os.path.abspath(os.path.join(os.path.dirname('app.py'), '..', '..', '..'))
 sys.path.append(parent_directory)
+
 
 @app_views.route('/status')
 def status():

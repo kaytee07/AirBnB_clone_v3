@@ -1,0 +1,20 @@
+#!/user/bin/python3
+"""
+This is a view for state
+"""
+import os
+import sys
+from flask import jsonify
+from models.state import State
+from models import storage
+from . import app_views
+parent_directory = os.path.abspath(os.path.join(os.path.dirname('app.py'), '..', '..', '..'))
+sys.path.append(parent_directory)
+
+
+@app_views.route('/states')
+def get_state():
+    """ return all state object """
+    all_states = list(storage.all("State").values())
+    print(all_states[0].to_dict())
+    return jsonify(all_states.__class__)

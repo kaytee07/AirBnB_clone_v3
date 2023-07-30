@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+ #!/usr/bin/python3
 """
 Contains the class DBStorage
 """
@@ -60,9 +60,13 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete from the current database session obj if not None"""
+        """
+        delete from the current database session obj if not None
+        obj = this is the instance of the class
+        """
         if obj is not None:
             self.__session.delete(obj)
+            self.__session.commit()
 
     def reload(self):
         """reloads data from the database"""
@@ -84,17 +88,22 @@ class DBStorage:
             self.__session.close()
 
     def count(self, cls=None):
+        """
+        if class object is passed count number of instances of
+        that class stored in db
+        other wise count all classes
+        cls = this is the type of class you want to count in db
+        """
         Session = sessionmaker(bind=self.__engine)
         self.__session = Session()
-        try:
+        if cls is None:
+            total_count = 0
+            for key, value in classes.items():
+                total_count += self.__session.query(cls).count()
+            return total_count
+        else:
             total_count = self.__session.query(cls).count()
             return total_count
-        except:
-            return 0
-        finally:
-            self.__session.close()
-
-
     def close(self):
         """
         call remove() method on the private session attribute
