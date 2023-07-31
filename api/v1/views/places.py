@@ -51,10 +51,10 @@ def place_post(city_id):
     if data is None:
         return jsonify({'error': 'Not a JSON'}), 400
 
-    if 'name' not in data.keys():
+    if 'name' not in data or not data['name']:
         return jsonify({'error': 'Missing name'}), 400
 
-    if 'user_id' not in data.keys():
+    if 'user_id' not in data or not data['user_id']:
         return jsonify({'error': 'Missing user_id'})
 
     if not storage.get(User, data.user_id):
