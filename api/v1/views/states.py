@@ -8,7 +8,8 @@ from flask import jsonify, abort, request
 from models.state import State
 from models import storage
 from . import app_views
-parent_directory = os.path.abspath(os.path.join(os.path.dirname('app.py'), '..', '..', '..'))
+parent_directory = os.path.abspath(os.path.join(os.path.dirname
+                                                ('app.py'), '..', '..', '..'))
 sys.path.append(parent_directory)
 
 
