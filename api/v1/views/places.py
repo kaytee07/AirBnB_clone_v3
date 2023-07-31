@@ -70,16 +70,23 @@ def place_post(city_id):
 @app_views.route('/places/<place_id>', methods=['PUT'])
 def place_put(place_id):
     """ handles PUT method """
-    place = storage.get("Place", place_id)
-    if place is None:
+    if place_id is None:
         abort(404)
+
     data = request.get_json()
     if data is None:
-        return jsonify({'error': 'Not a JSON'}), 400
+        return jsonify({'Not a JSON'}), 400
+
+    place = storage.get(Place, place_id)
+    if place is None:
+        abort(404)
+
     for key, value in data.items():
-        ignore_keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
-        if key not in ignore_keys:
-            place.bm_update(key, value)
+        if key == "created_at" or key == 'id' or key == 'updated_at':
+            continue
+        else:
+            setattr(place, key, value)
+    place_dict = place.to_dict()
     place.save()
-    place = place.to_json()
-    return jsonify(place), 200
+    storage.save()
+    return jsonify(place_dict), 200
