@@ -53,7 +53,7 @@ def create_review(place_id):
     if 'name' not in data or not data['name']:
         return jsonify({'error': 'Missing name'}), 400
 
-    if 'user_id' not in data or not data['user_id']::
+    if 'user_id' not in data or not data['user_id']:
         return jsonify({'error': 'Missing user_id'}), 400
 
     if 'text' not in data or not data['text']:
