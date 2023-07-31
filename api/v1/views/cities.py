@@ -60,8 +60,6 @@ def create_city(state_id):
     if 'name' not in data.keys():
         return jsonify({'error': 'Missing name'}), 400
 
-    if state is None:
-        abort(404)
     city = City(**data)
     city.state_id = state_id
     city.save()
