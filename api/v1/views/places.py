@@ -9,10 +9,11 @@ from flask import (abort, jsonify, make_response, request)
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
 def get_places_in_city():
     """ return all place object """
+    get_place = []
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    for data city.places:
+    for data in city.places:
         get_place.append(data.to_dict())
     return jsonify(get_place)
 
