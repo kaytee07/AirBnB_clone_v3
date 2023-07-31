@@ -19,3 +19,4 @@ from .cities import *
 from .amenities import *
 from .users import *
 from .places import *
+from api.v1.views.places_reviews import *
