@@ -53,7 +53,7 @@ def create_amenity():
     if data is None:
         return jsonify({'error': 'Not a JSON'}), 400
 
-    if 'name' not in data.keys():
+    if 'name' not in data or not data['name']:
         return jsonify({'error': 'Missing name'}), 400
 
     new_amenity = Amenity(**data)
