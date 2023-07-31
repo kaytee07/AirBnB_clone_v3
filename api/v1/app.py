@@ -9,7 +9,8 @@ from models import storage
 from api.v1.views import app_views
 from flask_cors import CORS
 
-parent_directory = os.path.abspath(os.path.join(os.path.dirname('app.py'), '..', '..'))
+parent_directory = os.path.abspath(os.path.
+                                   join(os.path.dirname('app.py'), '..', '..'))
 sys.path.append(parent_directory)
 
 app = Flask(__name__)
