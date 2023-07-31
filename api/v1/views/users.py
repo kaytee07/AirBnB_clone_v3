@@ -53,10 +53,10 @@ def create_user():
     if data is None:
         return jsonify({'error': 'Not a JSON'}), 400
 
-    if 'name' not in data.keys():
+    if 'name' not in data or not data['name']:
         return jsonify({'error': 'Missing name'}), 400
 
-    if 'password' not in data.keys():
+    if 'password' not in data or not data['password']:
         return jsonify({'error': 'Missing password'}), 400
 
     new_user = User(**data)
@@ -89,4 +89,4 @@ def update_user(user_id):
             setattr(User, key, value)
     user.save()
     storage.save()
-    return jsonify(user.to_dict()), 200
+    return jsonify(user.to_dict()), 201
