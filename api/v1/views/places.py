@@ -6,12 +6,13 @@ from api.v1.views import (app_views, Place, storage)
 from flask import (abort, jsonify, make_response, request)
 
 
-@app_views.route('/places', strict_slashes=False)
-def get_all_places():
+@app_views.route('/cities/<city_id>/places', strict_slashes=False)
+def get_places_in_city():
     """ return all place object """
-    get_place = []
-    all_places = list(storage.all("Place").values())
-    for data in all_places:
+    city = storage.get("City", city_id)
+    if city is None:
+        abort(404)
+    for data city.places:
         get_place.append(data.to_dict())
     return jsonify(get_place)
 
@@ -44,22 +45,31 @@ def del_place(place_id):
     return jsonify({}), 200
 
 
-@app_views.route('/places', methods=['POST'], strict_slashes=False)
-def create_place():
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+def create_place(city_id):
     """
     create new place
     """
-    data = request.get_json()
-    if data is None:
-        return jsonify({'error': 'Not a JSON'}), 400
-
-    if 'name' not in data.keys():
-        return jsonify({'error': 'Missing name'}), 400
-
-    new_place = Place(**data)
-    storage.save()
-    place_dict = new_place.to_dict()
-    return jsonify(place_dict), 201
+    city = storage.get("City", city_id)
+    if city is None:
+        abort(404)
+    try:
+        r = request.get_json()
+    except:
+        r = None
+    if r is None:
+        return "Not a JSON", 400
+    if 'user_id' not in r.keys():
+        return "Missing user_id", 400
+    user = storage.get("User", r.get("user_id"))
+    if user is None:
+        abort(404)
+    if 'name' not in r.keys():
+        return "Missing name", 400
+    r["city_id"] = city_id
+    s = Place(**r)
+    s.save()
+    return jsonify(s.to_json()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
