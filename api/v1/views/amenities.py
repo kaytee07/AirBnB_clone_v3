@@ -62,7 +62,8 @@ def create_amenity():
     return jsonify(amenity_dict), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_state(amenity_id):
     """
     get class using state id passed in uri and update it using
@@ -74,7 +75,7 @@ def update_state(amenity_id):
     if data is None:
         return jsonify({'error': 'Not a JSON'}), 400
 
-    amenity = storage.get(Amenity, state_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
 
@@ -82,7 +83,7 @@ def update_state(amenity_id):
         if key == "created_at" or key == 'id' or key == 'updated_at':
             continue
         else:
-            setattr(state, key, value)
+            setattr(amenity, key, value)
     amenity.save()
     storage.save()
     return jsonify(amenity.to_dict()), 200
