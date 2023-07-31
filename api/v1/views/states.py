@@ -33,7 +33,7 @@ def get_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-   return jsonify(state.to_dict())
+    return jsonify(state.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
@@ -65,7 +65,7 @@ def create_state():
     new_state = State(**data)
     storage.save()
     state_dict = new_state.to_dict()
-   return jsonify(state_dict), 201
+    return jsonify(state_dict), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
