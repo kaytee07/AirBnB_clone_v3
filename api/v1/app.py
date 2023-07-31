@@ -7,12 +7,15 @@ import sys
 import os
 from models import storage
 from api.v1.views import app_views
+from flask_cors import CORS
+
 parent_directory = os.path.abspath(os.path.join(os.path.dirname('app.py'), '..', '..'))
 sys.path.append(parent_directory)
 
 app = Flask(__name__)
 
 app.register_blueprint(app_views)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
