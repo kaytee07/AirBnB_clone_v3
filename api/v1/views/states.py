@@ -53,7 +53,7 @@ def create_state():
     if data is None:
         return jsonify({'error': 'Not a JSON'}), 400
 
-    if 'name' not in data:
+    if 'name' not in data.keys():
         return jsonify({'error': 'Missing name'}), 400
 
     new_state = State(**data)
