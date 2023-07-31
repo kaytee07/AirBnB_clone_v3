@@ -7,7 +7,7 @@ from flask import (abort, jsonify, make_response, request)
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
-def get_places_in_city():
+def get_places_in_city(city_id):
     """ return all place object """
     get_place = []
     city = storage.get("City", city_id)
@@ -46,7 +46,8 @@ def del_place(place_id):
     return jsonify({}), 200
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
 def create_place(city_id):
     """
     create new place
