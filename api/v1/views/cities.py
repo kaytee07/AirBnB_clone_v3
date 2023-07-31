@@ -16,6 +16,8 @@ def get_city_by_state(state_id):
     for data in state:
         if data.state_id == state_id:
             city_in_state.append(data.to_dict())
+    if len(city_in_state) == 0:
+        abort(404)
     return jsonify(city_in_state), 200
 
 
@@ -62,8 +64,9 @@ def create_city(state_id):
 
     city = City(**data)
     city.state_id = state_id
+    city_dict = city.to_dict()
     city.save()
-    return jsonify(city.to_dict()), 201
+    return jsonify(city_dict), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'],
