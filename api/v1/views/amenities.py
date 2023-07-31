@@ -64,9 +64,9 @@ def create_amenity():
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_state(amenity_id):
+def update_amenity(amenity_id):
     """
-    get class using state id passed in uri and update it using
+    get class sing samenity id passed in uri and update it using
     data from http body
     """
     if amenity_id is None:
