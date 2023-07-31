@@ -45,7 +45,7 @@ def del_place(place_id):
 
 
 @app_views.route('/places', methods=['POST'], strict_slashes=False)
-def create_user():
+def create_place():
     """
     create new place
     """
