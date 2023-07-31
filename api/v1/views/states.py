@@ -13,7 +13,7 @@ parent_directory = os.path.abspath(os.path.join(os.path.dirname
 sys.path.append(parent_directory)
 
 
-@app_views.route('/states')
+@app_views.route('/states', strict_slashes=False)
 def get_allstate():
     """ return all state object """
     get_state = []
@@ -23,7 +23,7 @@ def get_allstate():
     return jsonify(get_state)
 
 
-@app_views.route('/states/<state_id>')
+@app_views.route('/states/<state_id>', strict_slashes=False)
 def get_state(state_id):
     """
     get state in database using state id pass through the uri
@@ -36,7 +36,7 @@ def get_state(state_id):
    return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def del_state(state_id):
     """
     delete state using state id passed in the the uri
@@ -50,7 +50,7 @@ def del_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """
     create new state
@@ -68,7 +68,7 @@ def create_state():
    return jsonify(state_dict), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """
     get class using state id passed in uri and update it using
