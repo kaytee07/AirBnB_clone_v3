@@ -76,7 +76,7 @@ def update_user(user_id):
         abort(404)
     data = request.get_json()
     if data is None:
-        return jsonify({error:'Not a JSON'}), 400
+        return jsonify({'error': 'Not a JSON'}), 400
 
     user = storage.get(User, user_id)
     if user is None:
