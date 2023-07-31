@@ -9,7 +9,7 @@ from flask import (abort, jsonify, request)
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def places_all(place_id):
+def all_reviews(place_id):
     """ returns list of all Place objects linked to a given City """
     reviews = list(storage.all("Review").values())
     review_in_place = []
