@@ -49,13 +49,13 @@ def place_post(city_id):
     """ handles POST method """
     data = request.get_json()
     if data is None:
-        return jsonify({'Not a JSON'}), 400
+        return jsonify({'error': 'Not a JSON'}), 400
 
     if 'name' not in data.keys():
-        return jsonify({'Missing name'}), 400
+        return jsonify({'error': 'Missing name'}), 400
 
     if 'user_id' not in data.keys():
-        return jsonify({'Missing user_id'})
+        return jsonify({'error': 'Missing user_id'})
 
     if not storage.get(User, data.user_id):
         abort(404)
@@ -75,7 +75,7 @@ def place_put(place_id):
         abort(404)
     data = request.get_json()
     if data is None:
-        abort(400, "Not a JSON")
+        return jsonify({'error': 'Not a JSON'}), 400
     for key, value in data.items():
         ignore_keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
         if key not in ignore_keys:
